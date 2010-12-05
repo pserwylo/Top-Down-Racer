@@ -10,7 +10,6 @@
 #include "core/Car.h"
 #include "core/global.h"
 #include "core/Race.h"
-#include "rendering/sdl/CarRenderer.h"
 #include <iostream>
 
 int main( int argc, char** argv )

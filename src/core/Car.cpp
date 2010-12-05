@@ -6,6 +6,7 @@
  */
 
 #include "Car.h"
+#include "Box2D.h"
 #include <cmath>
 
 const float Car::MAX_STEERING_ANGLE;

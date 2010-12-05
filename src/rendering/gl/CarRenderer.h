@@ -8,9 +8,10 @@
 #ifndef CARRENDERER_H_
 #define CARRENDERER_H_
 
+#include "GlRenderer.h"
 class Car;
 
-class CarGlRenderer
+class CarGlRenderer : public GlRenderer
 {
 
 public:

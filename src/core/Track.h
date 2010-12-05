@@ -8,16 +8,26 @@
 #ifndef TRACK_H_
 #define TRACK_H_
 
+#include <vector>
+
+class b2PolygonShape;
+class b2World;
+
 class Track
 {
 public:
-	Track();
+	Track( b2World* world );
 	virtual ~Track();
 
 public:
-	b2PolygonShape** getObstacles();
-	b2PolygonShape** getBorders();
-	b2PolygonShape** getWaypoints();
+	std::vector<b2PolygonShape*> & getObstacles();
+	std::vector<b2PolygonShape*> & getBorders();
+	std::vector<b2PolygonShape*> & getWaypoints();
+
+private:
+	std::vector<b2PolygonShape*> obstacles;
+	std::vector<b2PolygonShape*> borders;
+	std::vector<b2PolygonShape*> waypoints;
 
 };
 

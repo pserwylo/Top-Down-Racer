@@ -11,9 +11,10 @@
 #include <vector>
 #include "Input.h"
 #include "Car.h"
+#include "Track.h"
 
 class CarGlRenderer;
-class Track;
+class TrackGlRenderer;
 
 class Race
 {
@@ -32,6 +33,7 @@ private:
 	CarInput input;
 	Car* car;
 	CarGlRenderer* carRenderer;
+	TrackGlRenderer* trackRenderer;
 	Track* track;
 	b2World* world;
 

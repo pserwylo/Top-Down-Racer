@@ -31,13 +31,7 @@ void CarGlRenderer::render()
 
 			for ( b2Fixture* f = body->GetFixtureList(); f; f = f->GetNext() )
 			{
-				b2PolygonShape* shape = (b2PolygonShape*)f->GetShape();
-				glBegin( GL_LINE_LOOP );
-					for ( int i = 0; i < shape->m_vertexCount; i ++ )
-					{
-							glVertex2d( shape->m_vertices[ i ].x, shape->m_vertices[ i ].y );
-					}
-				glEnd();
+				this->renderShape( (b2PolygonShape*)f->GetShape() );
 			}
 		glPopMatrix();
 	}

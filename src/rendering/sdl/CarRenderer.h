@@ -1,10 +1,3 @@
-/*
- * CarRenderer.h
- *
- *  Created on: 18/10/2010
- *      Author: pete
- */
-
 #ifndef CARRENDERER_H_
 #define CARRENDERER_H_
 

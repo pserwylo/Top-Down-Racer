@@ -1,10 +1,3 @@
-/*
- * CarRenderer.cpp
- *
- *  Created on: 18/10/2010
- *      Author: pete
- */
-
 #include "CarRenderer.h"
 #include "SDL/SDL_image.h"
 #include "SDL/SDL_rotozoom.h"

@@ -8,6 +8,7 @@
 #include "Race.h"
 #include "global.h"
 #include "rendering/gl/CarRenderer.h"
+#include "rendering/gl/TrackRenderer.h"
 #include <sys/time.h>
 #include <GL/gl.h>
 #include <Box2D.h>
@@ -17,6 +18,7 @@ Race::Race()
 
 	this->world = new b2World( b2Vec2( 0.0f, 0.0f ), true );
 	this->car = new Car( this->world );
+	this->track = new Track( this->world );
 }
 
 Race::~Race() {
@@ -37,6 +39,7 @@ void Race::runRace()
 	long int lastUpdateTime = this->getMilliseconds();
 	bool done = false;
 	this->carRenderer = new CarGlRenderer( this->car );
+	this->trackRenderer = new TrackGlRenderer( this->track );
 
 	do
 	{
@@ -86,5 +89,6 @@ void Race::draw()
 	glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
 	glClear( GL_COLOR_BUFFER_BIT );
 	this->carRenderer->render();
+	this->trackRenderer->render();
 	SDL_GL_SwapBuffers();
 }
