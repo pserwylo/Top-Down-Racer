@@ -23,6 +23,7 @@ public:
 	void readInput();
 	bool isAccelarating();
 	bool isDecelarating();
+	bool isShooting();
 	bool isTurningLeft();
 	bool isTurningRight();
 	bool isQuitting();
@@ -32,8 +33,9 @@ private:
 	static const int DECEL = 1;
 	static const int LEFT = 2;
 	static const int RIGHT = 3;
-	bool flags[4];
-	SDLKey keyFlagMap[4];
+	static const int SHOOT = 4;
+	bool flags[5];
+	SDLKey keyFlagMap[5];
 	bool quit;
 
 };

@@ -16,12 +16,22 @@ GlRenderer::~GlRenderer()
 {
 }
 
-void GlRenderer::renderShape( b2PolygonShape* shape )
+void GlRenderer::renderShape( b2Shape* shape )
 {
 	glBegin( GL_LINE_LOOP );
-		for ( int i = 0; i < shape->m_vertexCount; i ++ )
+		if ( shape->GetType() == b2Shape::e_loop )
 		{
-				glVertex2d( shape->m_vertices[ i ].x, shape->m_vertices[ i ].y );
+			for ( int i = 0; i < ((b2LoopShape*)shape)->GetCount(); i ++ )
+			{
+				glVertex2d( ((b2LoopShape*)shape)->GetVertices()[ i ].x, ((b2LoopShape*)shape)->GetVertices()[ i ].y );
+			}
+		}
+		else
+		{
+			for ( int i = 0; i < ((b2PolygonShape*)shape)->GetVertexCount(); i ++ )
+			{
+				glVertex2d( ((b2PolygonShape*)shape)->GetVertex( i ).x, ((b2PolygonShape*)shape)->GetVertex( i ).y );
+			}
 		}
 	glEnd();
 }

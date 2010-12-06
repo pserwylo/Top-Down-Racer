@@ -16,7 +16,7 @@ public:
 	virtual ~GlRenderer();
 
 protected:
-	void renderShape( b2PolygonShape* shape );
+	void renderShape( b2Shape* shape );
 
 };
 

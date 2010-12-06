@@ -6,6 +6,7 @@
  */
 
 #include "Car.h"
+#include "Gun.h"
 #include "Box2D.h"
 #include <cmath>
 
@@ -64,21 +65,32 @@ void Car::createGeometry( b2World* world, float width, float height )
 	carBodyShape.SetAsBox( width / 2, height / 2 );
 	this->carBody->CreateFixture( &carBodyShape, 1.0f );
 
+	// Give a negative index so that the wheels never collide with anything...
+	// TODO: Maybe could make this better, so that when wheels collide with something, if it is
+	// at sufficient pace, then it could knock them out of alignment and you couldn't steer properly...
+	// Sounds like a Box2D "sensor" is the tool for this job..
+	b2Filter wheelFilter;
+	wheelFilter.groupIndex = -1;
+
 	b2PolygonShape frontLeftWheelShape;
 	frontLeftWheelShape.SetAsBox( 0.2, 0.5 );
-	this->frontLeftWheel->CreateFixture( &frontLeftWheelShape, 1.0f );
+	b2Fixture* frontLeftWheelFixture = this->frontLeftWheel->CreateFixture( &frontLeftWheelShape, 1.0f );
+	frontLeftWheelFixture->SetFilterData( wheelFilter );
 
 	b2PolygonShape frontRightWheelShape;
 	frontRightWheelShape.SetAsBox( 0.2, 0.5 );
-	this->frontRightWheel->CreateFixture( &frontRightWheelShape, 1.0f );
+	b2Fixture* frontRightWheelFixture = this->frontRightWheel->CreateFixture( &frontRightWheelShape, 1.0f );
+	frontRightWheelFixture->SetFilterData( wheelFilter );
 
 	b2PolygonShape backLeftWheelShape;
 	backLeftWheelShape.SetAsBox( 0.2, 0.5 );
-	this->backLeftWheel->CreateFixture( &backLeftWheelShape, 1.0f );
+	b2Fixture* backLeftWheelFixture = this->backLeftWheel->CreateFixture( &backLeftWheelShape, 1.0f );
+	backLeftWheelFixture->SetFilterData( wheelFilter );
 
 	b2PolygonShape backRightWheelShape;
 	backRightWheelShape.SetAsBox( 0.2, 0.5 );
-	this->backRightWheel->CreateFixture( &backRightWheelShape, 1.0f );
+	b2Fixture* backRightWheelFixture = this->backRightWheel->CreateFixture( &backRightWheelShape, 1.0f );
+	backRightWheelFixture->SetFilterData( wheelFilter );
 
 
 	// Connect wheels to car...
@@ -109,7 +121,8 @@ void Car::createGeometry( b2World* world, float width, float height )
 	world->CreateJoint( &backLeftJointDef );
 	world->CreateJoint( &backRightJointDef );
 
-
+	Gun* gun = new Gun( world, this, b2Vec2( 0.0f, 0.5f ) );
+	this->guns.push_back( gun );
 }
 
 Car::~Car()
@@ -132,6 +145,16 @@ void Car::setSteeringAngle( float angle )
 		angle = Car::MAX_STEERING_ANGLE;
 	}
 	this->steeringWheelAngle = angle;
+}
+
+void Car::setLocation( b2Vec2 loc )
+{
+	this->carBody->SetTransform( loc, 0.0f );
+}
+
+std::vector<Gun*>& Car::getGuns()
+{
+	return this->guns;
 }
 
 void Car::update()

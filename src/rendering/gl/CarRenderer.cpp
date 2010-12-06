@@ -19,20 +19,28 @@ CarGlRenderer::~CarGlRenderer()
 
 void CarGlRenderer::render()
 {
-
-	b2Body* bodiesToDraw[] = { this->car->carBody, this->car->frontLeftWheel, this->car->frontRightWheel, this->car->backLeftWheel, this->car->backRightWheel };
-	glColor3f( 1.0f, 1.0f, 1.0f );
-	for ( int i = 0; i < 5; i ++ )
+	this->renderBody( this->car->carBody );
+	this->renderBody( this->car->frontLeftWheel );
+	this->renderBody( this->car->frontRightWheel );
+	this->renderBody( this->car->backLeftWheel );
+	this->renderBody( this->car->backRightWheel );
+	for ( std::vector<Gun*>::iterator it = this->car->getGuns().begin(); it != this->car->getGuns().end(); it ++ )
 	{
-		b2Body* body = bodiesToDraw[ i ];
-		glPushMatrix();
-			glTranslated( body->GetPosition().x, body->GetPosition().y, 0 );
-			glRotated( body->GetAngle() * 180 / 3.14159, 0, 0, 1 );
+		this->renderBody( (*it)->getBody() );
+	};
 
-			for ( b2Fixture* f = body->GetFixtureList(); f; f = f->GetNext() )
-			{
-				this->renderShape( (b2PolygonShape*)f->GetShape() );
-			}
-		glPopMatrix();
-	}
+}
+
+void CarGlRenderer::renderBody( b2Body* body )
+{
+	glColor3f( 1.0f, 1.0f, 1.0f );
+	glPushMatrix();
+		glTranslated( body->GetPosition().x, body->GetPosition().y, 0 );
+		glRotated( body->GetAngle() * 180 / 3.14159, 0, 0, 1 );
+
+		for ( b2Fixture* f = body->GetFixtureList(); f; f = f->GetNext() )
+		{
+			this->renderShape( f->GetShape() );
+		}
+	glPopMatrix();
 }

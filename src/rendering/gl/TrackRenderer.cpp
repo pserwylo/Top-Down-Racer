@@ -15,5 +15,8 @@ TrackGlRenderer::~TrackGlRenderer()
 
 void TrackGlRenderer::render()
 {
-	this->renderShape( this->track->getBorders()[ 0 ] );
+	for ( std::vector<b2Shape*>::iterator it = this->track->getBorders().begin(); it != this->track->getBorders().end(); it ++ )
+	{
+		this->renderShape( *it );
+	}
 }

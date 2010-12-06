@@ -23,6 +23,8 @@ public:
 private:
 	Car* car;
 
+	void renderBody( b2Body* body );
+
 };
 
 #endif /* CARRENDERER_H_ */

@@ -8,7 +8,11 @@
 #ifndef CAR_H_
 #define CAR_H_
 
+
+#include <vector>
+
 #include "Box2D.h"
+#include "Gun.h"
 #include "rendering/gl/CarRenderer.h"
 #include "rendering/sdl/CarRenderer.h"
 
@@ -17,6 +21,7 @@ class Car
 
 	friend class CarGlRenderer;
 	friend class CarSdlRenderer;
+	friend class Gun;
 
 public:
 	Car( b2World* world );
@@ -25,6 +30,8 @@ public:
 	void setThrottle( bool apply );
 	void setSteeringAngle( float angle );
 	void update();
+	void setLocation( b2Vec2 loc );
+	std::vector<Gun*>& getGuns();
 
 public:
 	const static float MAX_STEERING_ANGLE = 0.5f;
@@ -40,6 +47,7 @@ protected:
 	b2RevoluteJoint* frontRightJoint;
 	bool isThrottleApplied;
 	float steeringWheelAngle;
+	std::vector<Gun*> guns;
 
 	void createGeometry( b2World* world, float width, float height );
 	void killOrthogonalVelocity( b2Body* targetBody );

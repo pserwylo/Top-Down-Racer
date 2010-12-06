@@ -10,10 +10,11 @@
 
 #include <string>
 class Track;
+class b2World;
 
 class TrackReader {
 public:
-	TrackReader( std::string filename );
+	TrackReader( b2World* world, std::string filename, double scale = 1 );
 	virtual ~TrackReader();
 
 	Track* getTrack();

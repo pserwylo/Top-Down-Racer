@@ -14,10 +14,12 @@ CarInput::CarInput() : quit ( false )
 	this->flags[ DECEL ] = false;
 	this->flags[ LEFT ] = false;
 	this->flags[ RIGHT ] = false;
+	this->flags[ SHOOT ] = false;
 	this->keyFlagMap[ ACCEL ] = SDLK_UP;
 	this->keyFlagMap[ DECEL ] = SDLK_DOWN;
 	this->keyFlagMap[ LEFT ] = SDLK_LEFT;
 	this->keyFlagMap[ RIGHT ] = SDLK_RIGHT;
+	this->keyFlagMap[ SHOOT ] = SDLK_SPACE;
 }
 
 CarInput::~CarInput()
@@ -74,6 +76,11 @@ bool CarInput::isTurningLeft()
 bool CarInput::isTurningRight()
 {
 	return this->flags[ RIGHT ];
+}
+
+bool CarInput::isShooting()
+{
+	return this->flags[ SHOOT ];
 }
 
 bool CarInput::isQuitting()

@@ -7,18 +7,23 @@
 
 #include "Race.h"
 #include "global.h"
+#include "io/TrackReader.h"
 #include "rendering/gl/CarRenderer.h"
 #include "rendering/gl/TrackRenderer.h"
 #include <sys/time.h>
 #include <GL/gl.h>
 #include <Box2D.h>
+#include <iostream>
 
 Race::Race()
 {
 
 	this->world = new b2World( b2Vec2( 0.0f, 0.0f ), true );
 	this->car = new Car( this->world );
-	this->track = new Track( this->world );
+	this->car2 = new Car( this->world );
+	this->car2->setLocation( b2Vec2( 10.0f, 0.0f ) );
+	TrackReader reader( this->world, "/home/pete/code/TDR/data/tracks/test/test.svg", 10 );
+	this->track = reader.getTrack();
 }
 
 Race::~Race() {
@@ -39,6 +44,7 @@ void Race::runRace()
 	long int lastUpdateTime = this->getMilliseconds();
 	bool done = false;
 	this->carRenderer = new CarGlRenderer( this->car );
+	this->car2Renderer = new CarGlRenderer( this->car2 );
 	this->trackRenderer = new TrackGlRenderer( this->track );
 
 	do
@@ -59,28 +65,37 @@ bool Race::update( int timeDiff )
 	if ( this->input.isAccelarating() )
 	{
 		this->car->setThrottle( true );
+		this->car2->setThrottle( true );
 	}
 	else
 	{
 		this->car->setThrottle( false );
+		this->car2->setThrottle( false );
 	}
 
 	if ( this->input.isTurningLeft() )
 	{
 		this->car->setSteeringAngle( -Car::MAX_STEERING_ANGLE );
+		this->car2->setSteeringAngle( -Car::MAX_STEERING_ANGLE );
 	}
 	else if ( this->input.isTurningRight() )
 	{
 		this->car->setSteeringAngle( Car::MAX_STEERING_ANGLE );
+		this->car2->setSteeringAngle( Car::MAX_STEERING_ANGLE );
 	}
 	else
 	{
 		this->car->setSteeringAngle( 0.0f );
+		this->car2->setSteeringAngle( 0.0f );
 	}
 
 	this->car->update();
+	this->car2->update();
 
 	this->world->Step( 1.0f / 60.f, 10, 10 );
+
+	std::cout << "Gun (" << this->car->getGuns().at( 0 )->getBody()->GetPosition().x << std::endl;
+
 	return this->input.isQuitting();
 }
 
@@ -89,6 +104,7 @@ void Race::draw()
 	glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
 	glClear( GL_COLOR_BUFFER_BIT );
 	this->carRenderer->render();
+	this->car2Renderer->render();
 	this->trackRenderer->render();
 	SDL_GL_SwapBuffers();
 }

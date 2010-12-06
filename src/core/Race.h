@@ -9,7 +9,7 @@
 #define RACE_H_
 
 #include <vector>
-#include "Input.h"
+#include "io/Input.h"
 #include "Car.h"
 #include "Track.h"
 
@@ -32,7 +32,9 @@ private:
 
 	CarInput input;
 	Car* car;
+	Car* car2;
 	CarGlRenderer* carRenderer;
+	CarGlRenderer* car2Renderer;
 	TrackGlRenderer* trackRenderer;
 	Track* track;
 	b2World* world;
