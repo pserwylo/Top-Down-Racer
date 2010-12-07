@@ -32,7 +32,6 @@ private:
 
 	CarInput input;
 	Car* car;
-	Car* car2;
 	CarGlRenderer* carRenderer;
 	CarGlRenderer* car2Renderer;
 	TrackGlRenderer* trackRenderer;

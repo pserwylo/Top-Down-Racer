@@ -188,6 +188,11 @@ void Car::update()
 	// steeringSpeed = this->steeringWheelAngle - this->frontRightJoint->GetJointAngle();
 	this->frontRightJoint->SetMotorSpeed( steeringSpeed );
 
+	for ( std::vector<Gun*>::iterator it = this->guns.begin(); it != this->guns.end(); it ++ )
+	{
+		(*it)->update();
+	}
+
 }
 
 

@@ -27,6 +27,19 @@ void CarGlRenderer::render()
 	for ( std::vector<Gun*>::iterator it = this->car->getGuns().begin(); it != this->car->getGuns().end(); it ++ )
 	{
 		this->renderBody( (*it)->getBody() );
+		for ( std::vector<b2Body*>::iterator bIt = (*it)->getBullets().begin(); bIt != (*it)->getBullets().end(); bIt ++ )
+		{
+			this->renderBody( (*bIt) );
+		}
+
+		b2Vec2 shootPos = (*it)->getShootPosition();
+		b2Vec2 endPos = shootPos + (*it)->getShootVelocity();
+
+		glPointSize( 3 );
+		glBegin( GL_POINTS );
+			glVertex2d( shootPos.x, shootPos.y );
+			glVertex2d( endPos.x, endPos.y );
+		glEnd();
 	};
 
 }

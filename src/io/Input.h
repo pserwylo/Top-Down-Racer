@@ -34,8 +34,9 @@ private:
 	static const int LEFT = 2;
 	static const int RIGHT = 3;
 	static const int SHOOT = 4;
-	bool flags[5];
-	SDLKey keyFlagMap[5];
+	static const int NUM_KEYS = 5;
+	bool flags[ NUM_KEYS ];
+	SDLKey keyFlagMap[ NUM_KEYS ];
 	bool quit;
 
 };

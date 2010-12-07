@@ -9,6 +9,7 @@ public:
 	GameObject();
 	virtual ~GameObject();
 
+	virtual void update() {};
 	virtual b2Body* getBody() = 0;
 };
 

@@ -37,7 +37,7 @@ void CarInput::readInput()
 		}
 		else if ( event.type == SDL_KEYDOWN )
 		{
-			for ( int i = 0; i < 4; i ++ )
+			for ( int i = 0; i < NUM_KEYS; i ++ )
 			{
 				if ( event.key.keysym.sym == this->keyFlagMap[ i ] )
 				{
@@ -47,7 +47,7 @@ void CarInput::readInput()
 		}
 		else if ( event.type == SDL_KEYUP )
 		{
-			for ( int i = 0; i < 4; i ++ )
+			for ( int i = 0; i < NUM_KEYS; i ++ )
 			{
 				if ( event.key.keysym.sym == this->keyFlagMap[ i ] )
 				{
