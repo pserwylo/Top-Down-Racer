@@ -6,7 +6,6 @@
  */
 
 #include "core/Race.h"
-#include "core/global.h"
 #include "io/Input.h"
 #include "io/TrackReader.h"
 #include "env/Environment.h"

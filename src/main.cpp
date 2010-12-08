@@ -1,5 +1,4 @@
 #include "core/Car.h"
-#include "core/global.h"
 #include "core/Race.h"
 #include <iostream>
 #include "env/Environment.h"
