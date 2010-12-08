@@ -20,13 +20,13 @@ public:
 	CarInput();
 	virtual ~CarInput();
 
-	void readInput();
-	bool isAccelarating();
-	bool isDecelarating();
-	bool isShooting();
-	bool isTurningLeft();
-	bool isTurningRight();
-	bool isQuitting();
+	virtual void readInput();
+	virtual bool isAccelarating();
+	virtual bool isDecelarating();
+	virtual bool isShooting();
+	virtual bool isTurningLeft();
+	virtual bool isTurningRight();
+	virtual bool isQuitting();
 
 private:
 	static const int ACCEL = 0;
