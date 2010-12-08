@@ -1,15 +1,21 @@
 #include "env/SdlGlEnvironment.h"
 #include "SDL/SDL.h"
 #include "GL/gl.h"
+#include "io/SdlInput.h"
 
 SdlGlEnvironment::SdlGlEnvironment()
 {
-
+	this->input = new SdlInput();
 }
 
 SdlGlEnvironment::~SdlGlEnvironment()
 {
 
+}
+
+Input* SdlGlEnvironment::getInput()
+{
+	return this->input;
 }
 
 void SdlGlEnvironment::setup()

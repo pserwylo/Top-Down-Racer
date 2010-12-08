@@ -9,10 +9,10 @@
 #define RACE_H_
 
 #include <vector>
-#include "io/Input.h"
 #include "Car.h"
 #include "Track.h"
 
+class Input;
 class CarGlRenderer;
 class TrackGlRenderer;
 
@@ -30,7 +30,7 @@ private:
 	void draw();
 	long int getMilliseconds();
 
-	CarInput input;
+	Input* input;
 	Car* car;
 	CarGlRenderer* carRenderer;
 	CarGlRenderer* car2Renderer;

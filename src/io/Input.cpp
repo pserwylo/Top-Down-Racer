@@ -8,82 +8,45 @@
 #include "Input.h"
 #include "SDL/SDL.h"
 
-CarInput::CarInput() : quit ( false )
+Input::Input() : quit ( false )
 {
 	this->flags[ ACCEL ] = false;
 	this->flags[ DECEL ] = false;
 	this->flags[ LEFT ] = false;
 	this->flags[ RIGHT ] = false;
 	this->flags[ SHOOT ] = false;
-	this->keyFlagMap[ ACCEL ] = SDLK_UP;
-	this->keyFlagMap[ DECEL ] = SDLK_DOWN;
-	this->keyFlagMap[ LEFT ] = SDLK_LEFT;
-	this->keyFlagMap[ RIGHT ] = SDLK_RIGHT;
-	this->keyFlagMap[ SHOOT ] = SDLK_SPACE;
 }
 
-CarInput::~CarInput()
+Input::~Input()
 {
 }
 
-void CarInput::readInput()
-{
-	SDL_Event event;
-	while ( SDL_PollEvent( &event ) )
-	{
-		if ( event.type == SDL_QUIT )
-		{
-			this->quit = true;
-		}
-		else if ( event.type == SDL_KEYDOWN )
-		{
-			for ( int i = 0; i < NUM_KEYS; i ++ )
-			{
-				if ( event.key.keysym.sym == this->keyFlagMap[ i ] )
-				{
-					this->flags[ i ] = true;
-				}
-			}
-		}
-		else if ( event.type == SDL_KEYUP )
-		{
-			for ( int i = 0; i < NUM_KEYS; i ++ )
-			{
-				if ( event.key.keysym.sym == this->keyFlagMap[ i ] )
-				{
-					this->flags[ i ] = false;
-				}
-			}
-		}
-	}
-}
-
-bool CarInput::isAccelarating()
+bool Input::isAccelarating()
 {
 	return this->flags[ ACCEL ];
 }
 
-bool CarInput::isDecelarating()
+bool Input::isDecelarating()
 {
 	return this->flags[ DECEL ];
 }
 
-bool CarInput::isTurningLeft()
+bool Input::isTurningLeft()
 {
 	return this->flags[ LEFT ];
 }
 
-bool CarInput::isTurningRight()
+bool Input::isTurningRight()
 {
 	return this->flags[ RIGHT ];
 }
 
-bool CarInput::isShooting()
+bool Input::isShooting()
 {
 	return this->flags[ SHOOT ];
 }
 
-bool CarInput::isQuitting()
+bool Input::isQuitting()
 {
 	return this->quit;
 }

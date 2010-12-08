@@ -5,9 +5,11 @@
  *      Author: pete
  */
 
-#include "Race.h"
-#include "global.h"
+#include "core/Race.h"
+#include "core/global.h"
+#include "io/Input.h"
 #include "io/TrackReader.h"
+#include "env/Environment.h"
 #include "rendering/gl/CarRenderer.h"
 #include "rendering/gl/TrackRenderer.h"
 #include <sys/time.h>
@@ -17,7 +19,7 @@
 
 Race::Race()
 {
-
+	this->input = Environment::getEnvironment()->getInput();
 	this->world = new b2World( b2Vec2( 0.0f, 0.0f ), true );
 	this->car = new Car( this->world );
 	TrackReader reader( this->world, "/home/pete/code/TDR/data/tracks/test/test.svg", 10 );
@@ -58,9 +60,9 @@ void Race::runRace()
 
 bool Race::update( int timeDiff )
 {
-	this->input.readInput();
+	this->input->readInput();
 
-	if ( this->input.isAccelarating() )
+	if ( this->input->isAccelarating() )
 	{
 		this->car->setThrottle( true );
 	}
@@ -69,11 +71,11 @@ bool Race::update( int timeDiff )
 		this->car->setThrottle( false );
 	}
 
-	if ( this->input.isTurningLeft() )
+	if ( this->input->isTurningLeft() )
 	{
 		this->car->setSteeringAngle( -Car::MAX_STEERING_ANGLE );
 	}
-	else if ( this->input.isTurningRight() )
+	else if ( this->input->isTurningRight() )
 	{
 		this->car->setSteeringAngle( Car::MAX_STEERING_ANGLE );
 	}
@@ -82,7 +84,7 @@ bool Race::update( int timeDiff )
 		this->car->setSteeringAngle( 0.0f );
 	}
 
-	if ( this->input.isShooting() )
+	if ( this->input->isShooting() )
 	{
 		for ( std::vector<Gun*>::iterator it = this->car->getGuns().begin(); it != this->car->getGuns().end(); it ++ )
 		{
@@ -93,7 +95,7 @@ bool Race::update( int timeDiff )
 	this->car->update();
 
 	this->world->Step( 1.0f / 60.f, 10, 10 );
-	return this->input.isQuitting();
+	return this->input->isQuitting();
 }
 
 void Race::draw()

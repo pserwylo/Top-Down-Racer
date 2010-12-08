@@ -14,13 +14,14 @@
  * Deals with obtaining input from the user and presenting it as actions which
  * need to be applied to the car.
  */
-class CarInput
+class Input
 {
 public:
-	CarInput();
-	virtual ~CarInput();
+	Input();
+	virtual ~Input();
 
-	virtual void readInput();
+	virtual void readInput() = 0;
+
 	virtual bool isAccelarating();
 	virtual bool isDecelarating();
 	virtual bool isShooting();
@@ -28,7 +29,7 @@ public:
 	virtual bool isTurningRight();
 	virtual bool isQuitting();
 
-private:
+protected:
 	static const int ACCEL = 0;
 	static const int DECEL = 1;
 	static const int LEFT = 2;
@@ -36,7 +37,6 @@ private:
 	static const int SHOOT = 4;
 	static const int NUM_KEYS = 5;
 	bool flags[ NUM_KEYS ];
-	SDLKey keyFlagMap[ NUM_KEYS ];
 	bool quit;
 
 };
