@@ -8,8 +8,6 @@
 #ifndef INPUT_H_
 #define INPUT_H_
 
-#include "SDL/SDL.h"
-
 /**
  * Deals with obtaining input from the user and presenting it as actions which
  * need to be applied to the car.

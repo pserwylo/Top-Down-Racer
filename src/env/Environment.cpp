@@ -1,9 +1,9 @@
 #include "env/Environment.h"
 
 #ifdef WII
-#include "env/WiiEnvironment.h"
+#include "env/wii/WiiEnvironment.h"
 #else
-#include "env/SdlGlEnvironment.h"
+#include "env/reg/RegEnvironment.h"
 #endif
 
 Environment* Environment::environment = 0;
@@ -16,7 +16,7 @@ Environment* Environment::getEnvironment()
 		Environment::singletonExists = true;
 
 #ifdef WII
-		envrinoment = new WiiEnvironment();
+		Environment::environment = new WiiEnvironment();
 #else
 		Environment::environment = new SdlGlEnvironment();
 #endif

@@ -12,6 +12,9 @@ public:
 	virtual void setup() {};
 	virtual void tearDown() {};
 
+	virtual void startDraw() {};
+	virtual void endDraw() {};
+
 	virtual Input* getInput() = 0;
 
 	static Environment* getEnvironment();

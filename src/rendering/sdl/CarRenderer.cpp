@@ -9,7 +9,7 @@ SDL_Surface* CarSdlRenderer::surface = NULL;
 
 CarSdlRenderer::CarSdlRenderer( Car* car ) : car( car )
 {
-
+/*
 	if ( CarSdlRenderer::surface == NULL )
 	{
 		SDL_Surface* tmpSurface = NULL;
@@ -28,7 +28,7 @@ CarSdlRenderer::CarSdlRenderer( Car* car ) : car( car )
 		this->carImageBounds.y = CAR_2_Y_OFFSET;
 		this->carImageBounds.w = CAR_2_WIDTH;
 		this->carImageBounds.h = CAR_2_HEIGHT;
-	}
+	}*/
 }
 
 CarSdlRenderer::~CarSdlRenderer()
@@ -37,7 +37,7 @@ CarSdlRenderer::~CarSdlRenderer()
 
 void CarSdlRenderer::render( SDL_Surface* screen )
 {
-	SDL_Surface* rotatedSurface = NULL;
+/*	SDL_Surface* rotatedSurface = NULL;
 	SDL_Surface* carSurface = SDL_CreateRGBSurface
 	(
 		SDL_SWSURFACE,
@@ -61,5 +61,5 @@ void CarSdlRenderer::render( SDL_Surface* screen )
 	SDL_BlitSurface( rotatedSurface, NULL, screen, &location );
 
 	SDL_FreeSurface( rotatedSurface );
-	SDL_FreeSurface( carSurface );
+	SDL_FreeSurface( carSurface );*/
 }

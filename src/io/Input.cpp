@@ -6,7 +6,6 @@
  */
 
 #include "Input.h"
-#include "SDL/SDL.h"
 
 Input::Input() : quit ( false )
 {

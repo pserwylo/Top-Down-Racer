@@ -13,8 +13,8 @@
 #include "Track.h"
 
 class Input;
-class CarGlRenderer;
-class TrackGlRenderer;
+class CarRenderer;
+class TrackRenderer;
 
 class Race
 {
@@ -32,9 +32,8 @@ private:
 
 	Input* input;
 	Car* car;
-	CarGlRenderer* carRenderer;
-	CarGlRenderer* car2Renderer;
-	TrackGlRenderer* trackRenderer;
+	CarRenderer* carRenderer;
+	TrackRenderer* trackRenderer;
 	Track* track;
 	b2World* world;
 

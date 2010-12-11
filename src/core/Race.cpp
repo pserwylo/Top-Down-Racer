@@ -9,12 +9,13 @@
 #include "io/Input.h"
 #include "io/TrackReader.h"
 #include "env/Environment.h"
-#include "rendering/gl/CarRenderer.h"
-#include "rendering/gl/TrackRenderer.h"
 #include <sys/time.h>
-#include <GL/gl.h>
-#include <Box2D.h>
+#include <Box2D/Box2D.h>
 #include <iostream>
+#include <stdio.h>
+
+#include "rendering/CarRenderer.h"
+#include "rendering/TrackRenderer.h"
 
 Race::Race()
 {
@@ -43,8 +44,8 @@ void Race::runRace()
 {
 	long int lastUpdateTime = this->getMilliseconds();
 	bool done = false;
-	this->carRenderer = new CarGlRenderer( this->car );
-	this->trackRenderer = new TrackGlRenderer( this->track );
+	this->carRenderer = CarRenderer::create( this->car );
+	this->trackRenderer = TrackRenderer::create( this->track );
 
 	do
 	{
@@ -59,6 +60,7 @@ void Race::runRace()
 
 bool Race::update( int timeDiff )
 {
+
 	this->input->readInput();
 
 	if ( this->input->isAccelarating() )
@@ -70,7 +72,7 @@ bool Race::update( int timeDiff )
 		this->car->setThrottle( false );
 	}
 
-	if ( this->input->isTurningLeft() )
+	if ( this->input->isTurningLeft() || true )
 	{
 		this->car->setSteeringAngle( -Car::MAX_STEERING_ANGLE );
 	}
@@ -99,9 +101,8 @@ bool Race::update( int timeDiff )
 
 void Race::draw()
 {
-	glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
-	glClear( GL_COLOR_BUFFER_BIT );
+	Environment::getEnvironment()->startDraw();
 	this->carRenderer->render();
 	this->trackRenderer->render();
-	SDL_GL_SwapBuffers();
+	Environment::getEnvironment()->endDraw();
 }

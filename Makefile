@@ -17,7 +17,7 @@ include $(DEVKITPPC)/wii_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
-SOURCES		:=	src
+SOURCES		:=	src src/core src/io src/env src/env/wii src/lib src/rendering src/rendering/wiigfx src/tracks src/io/wii
 DATA		:=	data  
 INCLUDES	:=  include include/Box2D src
 
@@ -25,7 +25,7 @@ INCLUDES	:=  include include/Box2D src
 # options for code generation
 #---------------------------------------------------------------------------------
 
-CFLAGS	= -g -O2 -Wall $(MACHDEP) $(INCLUDE) -static
+CFLAGS	= -g -Wall $(MACHDEP) $(INCLUDE) -DWII
 CXXFLAGS	=	$(CFLAGS)
 
 LDFLAGS	=	-g $(MACHDEP) -Wl,-Map,$(notdir $@).map -static
@@ -39,7 +39,7 @@ LIBS	:=	-lwiiuse -lbte -logc -lm -lbox2d
 # list of directories containing libraries, this must be the top level containing
 # include and lib
 #---------------------------------------------------------------------------------
-LIBDIRS	:= .
+LIBDIRS	:= 
 
 #---------------------------------------------------------------------------------
 # no real need to edit anything past this point unless you need to add additional
@@ -96,8 +96,8 @@ export OUTPUT	:=	$(CURDIR)/$(TARGET)
 
 #---------------------------------------------------------------------------------
 $(BUILD):
-	@echo Include: $(INCLUDE)
 	@echo Libpath: $(LIBPATHS)
+	@echo Libs: $(LIBS)
 	@[ -d $@ ] || mkdir -p $@
 	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
@@ -110,6 +110,10 @@ clean:
 run:
 	wiiload $(TARGET).dol
 
+#---------------------------------------------------------------------------------
+emu:
+	@echo "Running emulator..."
+	./emu.sh
 
 #---------------------------------------------------------------------------------
 else

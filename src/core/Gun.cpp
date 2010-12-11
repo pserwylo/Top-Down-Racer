@@ -51,7 +51,7 @@ b2Vec2 Gun::getShootVelocity()
 	direction.Set( 0, 1 );
 	direction.x = -sin( this->gunBody->GetAngle() );
 	direction.y = cos( this->gunBody->GetAngle() );
-	direction *= 0.2;
+	direction *= 5;
 	return direction;
 }
 

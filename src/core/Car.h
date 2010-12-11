@@ -13,14 +13,22 @@
 
 #include "Box2D.h"
 #include "Gun.h"
-#include "rendering/gl/CarRenderer.h"
-#include "rendering/sdl/CarRenderer.h"
+
+#ifdef WII
+#include "rendering/wiigfx/WiiGfxCarRenderer.h"
+#else
+#include "rendering/reg/RegCarRenderer.h"
+#endif
 
 class Car
 {
 
-	friend class CarGlRenderer;
-	friend class CarSdlRenderer;
+#ifdef WII
+	friend class WiiGfxCarRenderer;
+#else
+	friend class RegCarRenderer;
+#endif
+
 	friend class Gun;
 
 public:

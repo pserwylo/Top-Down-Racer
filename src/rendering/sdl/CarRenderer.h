@@ -1,5 +1,5 @@
-#ifndef CARRENDERER_H_
-#define CARRENDERER_H_
+#ifndef SDLCARRENDERER_H_
+#define SDLCARRENDERER_H_
 
 #include <SDL/SDL.h>
 #include "core/Car.h"

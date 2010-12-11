@@ -16,6 +16,11 @@ TrackReader::TrackReader( b2World* world, std::string filename, double scale )
 {
 	this->track = new Track( world );
 
+	return;
+#ifdef WII
+	return;
+#endif
+
 	string line;
 	string xml;
 
