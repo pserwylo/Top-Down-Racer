@@ -45,25 +45,22 @@ void WiiGfxCarRenderer::renderBody( b2Body* body )
 {
 	Mtx view;
 	( (WiiEnvironment*)Environment::getEnvironment() )->getView( view );
-	Mtx model, modelview;
-
+	Mtx modelview;
 
 	Mtx rot;
 	Mtx trans;
 
-	// guMtxIdentity( model );
-	// guMtxIdentity( rot );
 	guMtxIdentity( trans );
+
+	guMtxTransApply( trans, trans, body->GetPosition().x, body->GetPosition().y, -6.0f );
+	guMtxConcat( view, trans, modelview );
 
 	guVector axis;
 	axis.x = 0.0f;
 	axis.y = 0;
 	axis.z = 1.0f;
 	guMtxRotAxisRad( rot, &axis, body->GetAngle() );
-	guMtxConcat( view, rot, modelview );
-
-	guMtxTransApply( trans, trans, body->GetPosition().x, body->GetPosition().y, -6.0f );
-	guMtxConcat( modelview, trans, modelview );
+	guMtxConcat( modelview, rot, modelview );
 
 	// load the modelview matrix into matrix memory
 	GX_LoadPosMtxImm( modelview, GX_PNMTX0 );
