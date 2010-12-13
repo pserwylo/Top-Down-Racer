@@ -1,14 +1,8 @@
-/*
- * Race.cpp
- *
- *  Created on: 19/10/2010
- *      Author: pete
- */
-
 #include "core/Race.h"
-#include "io/Input.h"
-#include "io/TrackReader.h"
+#include "io/userinput/Input.h"
+#include "io/trackreader/TrackReader.h"
 #include "env/Environment.h"
+
 #include <sys/time.h>
 #include <Box2D/Box2D.h>
 #include <iostream>
@@ -22,8 +16,13 @@ Race::Race()
 	this->input = Environment::getEnvironment()->getInput();
 	this->world = new b2World( b2Vec2( 0.0f, 0.0f ), true );
 	this->car = new Car( this->world );
-	TrackReader reader( this->world, "/home/pete/code/TDR/data/tracks/test/test.svg", 10 );
-	this->track = reader.getTrack();
+	TrackReader* reader = TrackReader::create( this->world, "test", 10 );
+	this->track = reader->getTrack();
+
+	// TODO: Do I need to return a pointer and then delete it? Or can I return a reference to the object which will
+	// get removed when the 'reader' var goes out of scope at the end of the constructor? I imagine that if I returned
+	// a copy of the object, than it would do what I desire, except it would go to the effort to copy the entire object...
+	delete reader;
 }
 
 Race::~Race()
@@ -72,7 +71,7 @@ bool Race::update( int timeDiff )
 		this->car->setThrottle( false );
 	}
 
-	if ( this->input->isTurningLeft() || true )
+	if ( this->input->isTurningLeft() )
 	{
 		this->car->setSteeringAngle( -Car::MAX_STEERING_ANGLE );
 	}
@@ -95,7 +94,12 @@ bool Race::update( int timeDiff )
 
 	this->car->update();
 
-	this->world->Step( 1.0f / 60.f, 10, 10 );
+#ifdef WII
+	this->world->Step( 1.0f / 10.0f, 5, 5);
+#else
+	this->world->Step( 1.0f / 60.0f, 10, 10 );
+#endif
+
 	return this->input->isQuitting();
 }
 

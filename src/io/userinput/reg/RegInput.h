@@ -1,14 +1,7 @@
-/*
- * SdlInput.h
- *
- *  Created on: 08/12/2010
- *      Author: pete
- */
+#ifndef REGINPUT_H_
+#define REGINPUT_H_
 
-#ifndef SDLINPUT_H_
-#define SDLINPUT_H_
-
-#include "io/Input.h"
+#include "io/userinput/Input.h"
 #include <SDL/SDL.h>
 
 class RegInput : public Input
@@ -23,4 +16,4 @@ private:
 	SDLKey keyFlagMap[ NUM_KEYS ];
 };
 
-#endif /* SDLINPUT_H_ */
+#endif /* REGINPUT_H_ */

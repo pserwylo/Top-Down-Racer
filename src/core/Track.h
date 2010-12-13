@@ -1,15 +1,8 @@
-/*
- * Track.h
- *
- *  Created on: 18/10/2010
- *      Author: pete
- */
-
 #ifndef TRACK_H_
 #define TRACK_H_
 
 #include <vector>
-#include "io/TrackReader.h"
+#include "io/trackreader/TrackReader.h"
 
 class b2Shape;
 class b2World;

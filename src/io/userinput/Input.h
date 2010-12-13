@@ -1,10 +1,3 @@
-/*
- * Input.h
- *
- *  Created on: 19/10/2010
- *      Author: pete
- */
-
 #ifndef INPUT_H_
 #define INPUT_H_
 

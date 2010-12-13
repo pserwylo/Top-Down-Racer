@@ -1,5 +1,5 @@
 #include "core/Car.h"
-#include "rendering/wiigfx/WiiGfxCarRenderer.h"
+#include "rendering/gx/WiiGfxCarRenderer.h"
 #include "env/wii/WiiEnvironment.h"
 #include "gccore.h"
 #include <stdio.h>
@@ -29,14 +29,24 @@ void WiiGfxCarRenderer::render()
 			this->renderBody( (*bIt) );
 		}
 
-		/*b2Vec2 shootPos = (*it)->getShootPosition();
+		b2Vec2 shootPos = (*it)->getShootPosition();
 		b2Vec2 endPos = shootPos + (*it)->getShootVelocity();
 
-		glPointSize( 3 );
-		glBegin( GL_POINTS );
-			glVertex2d( shootPos.x, shootPos.y );
-			glVertex2d( endPos.x, endPos.y );
-		glEnd();*/
+		// Revert to the default modelview matrix...
+		Mtx view;
+		Mtx model;
+		Mtx modelview;
+		( (WiiEnvironment*)Environment::getEnvironment() )->getView( view );
+		guMtxIdentity( model );
+		guMtxConcat( view, model, modelview );
+
+		GX_LoadPosMtxImm( modelview, GX_PNMTX0 );
+		GX_Begin( GX_POINTS, GX_VTXFMT0, 2 );
+			GX_Position3f32( shootPos.x, shootPos.y, 0 );
+			GX_Color3f32( 1.0f, 1.0f, 1.0f );
+			GX_Position3f32( endPos.x, endPos.y, 0 );
+			GX_Color3f32( 1.0f, 1.0f, 1.0f );
+		GX_End();
 	};
 
 }
@@ -44,15 +54,15 @@ void WiiGfxCarRenderer::render()
 void WiiGfxCarRenderer::renderBody( b2Body* body )
 {
 	Mtx view;
-	( (WiiEnvironment*)Environment::getEnvironment() )->getView( view );
 	Mtx modelview;
 
 	Mtx rot;
 	Mtx trans;
 
+	( (WiiEnvironment*)Environment::getEnvironment() )->getView( view );
 	guMtxIdentity( trans );
 
-	guMtxTransApply( trans, trans, body->GetPosition().x, body->GetPosition().y, -6.0f );
+	guMtxTransApply( trans, trans, body->GetPosition().x, body->GetPosition().y, 0.0f );
 	guMtxConcat( view, trans, modelview );
 
 	guVector axis;

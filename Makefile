@@ -17,7 +17,7 @@ include $(DEVKITPPC)/wii_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
-SOURCES		:=	src src/core src/io src/env src/env/wii src/lib src/rendering src/rendering/wiigfx src/tracks src/io/wii
+SOURCES		:=	src src/core src/io src/env src/env/wii src/lib src/rendering src/rendering/gx src/tracks src/io/userinput/wii src/io/userinput src/io/trackreader src/io/trackreader/wii
 DATA		:=	data  
 INCLUDES	:=  include include/Box2D src
 
@@ -33,7 +33,7 @@ LDFLAGS	=	-g $(MACHDEP) -Wl,-Map,$(notdir $@).map -static
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS	:=	-lwiiuse -lbte -logc -lm -lbox2d
+LIBS	:=	-lfat -lwiiuse -lbte -logc -lm -lbox2d
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing

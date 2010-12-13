@@ -9,7 +9,7 @@
 #define WIIGFXCARRENDERER_H_
 
 #include "rendering/CarRenderer.h"
-#include "rendering/wiigfx/WiiGfxRenderer.h"
+#include "rendering/gx/WiiGfxRenderer.h"
 
 class WiiGfxCarRenderer : public WiiGfxRenderer, public CarRenderer
 {

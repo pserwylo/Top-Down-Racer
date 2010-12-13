@@ -1,11 +1,4 @@
-/*
- * Input.cpp
- *
- *  Created on: 19/10/2010
- *      Author: pete
- */
-
-#include "Input.h"
+#include "io/userinput/Input.h"
 
 Input::Input() : quit ( false )
 {

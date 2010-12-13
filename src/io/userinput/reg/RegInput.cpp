@@ -1,11 +1,4 @@
-/*
- * SdlInput.cpp
- *
- *  Created on: 08/12/2010
- *      Author: pete
- */
-
-#include <io/reg/RegInput.h>
+#include <io/userinput/reg/RegInput.h>
 
 RegInput::RegInput()
 {

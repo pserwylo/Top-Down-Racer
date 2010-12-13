@@ -1,7 +1,7 @@
 #include "env/reg/RegEnvironment.h"
 #include "SDL/SDL.h"
 #include "GL/gl.h"
-#include "io/reg/RegInput.h"
+#include "io/userinput/reg/RegInput.h"
 
 SdlGlEnvironment::SdlGlEnvironment()
 {

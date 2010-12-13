@@ -2,7 +2,7 @@
 #include "core/Track.h"
 
 #ifdef WII
-#include "rendering/wiigfx/WiiGfxTrackRenderer.h"
+#include "rendering/gx/WiiGfxTrackRenderer.h"
 #else
 #include "rendering/reg/RegTrackRenderer.h"
 #endif

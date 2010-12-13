@@ -1,19 +1,14 @@
-/*
- * WiiEnvironment.cpp
- *
- *  Created on: 08/12/2010
- *      Author: pete
- */
-
 #include "env/wii/WiiEnvironment.h"
+#include "io/userinput/wii/WiiInput.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
 #include <malloc.h>
-#include "gccore.h"
-#include "wiiuse/wpad.h"
-#include "io/wii/WiiInput.h"
+#include <gccore.h>
+#include <wiiuse/wpad.h>
+#include <fat.h>
 
 #define DEFAULT_FIFO_SIZE	(256*1024)
 
@@ -48,6 +43,13 @@ void WiiEnvironment::setup()
 	WPAD_Init();
 
 	rmode = VIDEO_GetPreferredMode(NULL);
+
+	// Attempt to initiate the fat filesystem...
+	if ( !fatInitDefault() )
+	{
+		// TODO: Logging somehow?
+		exit( 1 );
+	}
 
 	// allocate 2 framebuffers for double buffering
 	frameBuffer[0] = MEM_K0_TO_K1(SYS_AllocateFramebuffer(rmode));
@@ -107,9 +109,9 @@ void WiiEnvironment::setup()
 
 	// setup our camera at the origin
 	// looking down the -z axis with y up
-	guVector cam = {0.0F, 0.0F, 0.0F},
+	guVector cam = {0.0F, 0.0F, -100.0F},
 			up = {0.0F, 1.0F, 0.0F},
-		  look = {0.0F, 0.0F, -1.0F};
+		  look = {0.0F, 0.0F, 0.0F};
 	guLookAt(view, &cam, &up, &look);
 
 
@@ -139,10 +141,13 @@ void WiiEnvironment::getView( Mtx v )
 
 void WiiEnvironment::startDraw()
 {
+/*
 
 	WPAD_ScanPads();
 
 	if (WPAD_ButtonsDown(0) & WPAD_BUTTON_HOME) exit(0);
+*/
+
 
 	// do this before drawing
 	GX_SetViewport(0,0,rmode->fbWidth,rmode->efbHeight,0,1);

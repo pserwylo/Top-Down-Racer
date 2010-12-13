@@ -2,7 +2,7 @@
 #define WIIGFXTRACKRENDERER_H_
 
 #include "core/Track.h"
-#include "rendering/wiigfx/WiiGfxRenderer.h"
+#include "rendering/gx/WiiGfxRenderer.h"
 #include "rendering/TrackRenderer.h"
 
 class WiiGfxTrackRenderer : public WiiGfxRenderer, public TrackRenderer

@@ -3,7 +3,7 @@
 
 #include "env/Environment.h"
 #include "gccore.h"
-#include "rendering/wiigfx/WiiGfxRenderer.h"
+#include "rendering/gx/WiiGfxRenderer.h"
 
 class WiiInput;
 

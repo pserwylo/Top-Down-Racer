@@ -1,7 +1,7 @@
 #ifndef WIIINPUT_H_
 #define WIIINPUT_H_
 
-#include "io/Input.h"
+#include "io/userinput/Input.h"
 
 class WiiInput : public Input
 {

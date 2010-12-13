@@ -15,7 +15,7 @@
 #include "Gun.h"
 
 #ifdef WII
-#include "rendering/wiigfx/WiiGfxCarRenderer.h"
+#include "rendering/gx/WiiGfxCarRenderer.h"
 #else
 #include "rendering/reg/RegCarRenderer.h"
 #endif

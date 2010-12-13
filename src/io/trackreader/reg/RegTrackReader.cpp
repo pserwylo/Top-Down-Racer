@@ -1,4 +1,4 @@
-#include "io/TrackReader.h"
+#include "io/trackreader/reg/RegTrackReader.h"
 #include "core/Track.h"
 #include "lib/rapidxml.hpp"
 #include "Box2D.h"
@@ -12,20 +12,16 @@
 using namespace rapidxml;
 using namespace std;
 
-TrackReader::TrackReader( b2World* world, std::string filename, double scale )
+void RegTrackReader::readTrack( b2World* world, std::string trackName, double scale )
 {
 	this->track = new Track( world );
-
-	return;
-#ifdef WII
-	return;
-#endif
 
 	string line;
 	string xml;
 
 	ifstream stream;
-	stream.open( filename.c_str() );
+	string trackPath = "data/tracks/" + trackName + "/track.svg";
+	stream.open( trackPath.c_str() );
 	while ( !stream.eof() )
 	{
 		getline( stream, line );
@@ -86,8 +82,7 @@ TrackReader::TrackReader( b2World* world, std::string filename, double scale )
 
 						border->Create( borderPoints, points.size() );
 
-
-						this->track->borders.push_back( border );
+						this->track->getBorders().push_back( border );
 
 						obstacleBody->CreateFixture( border, points.size() );
 						break;
@@ -98,14 +93,4 @@ TrackReader::TrackReader( b2World* world, std::string filename, double scale )
 		}
 	}
 
-}
-
-TrackReader::~TrackReader()
-{
-
-}
-
-Track* TrackReader::getTrack()
-{
-	return this->track;
 }
