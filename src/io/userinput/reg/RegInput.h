@@ -11,9 +11,10 @@ public:
 	virtual ~RegInput();
 
 	virtual void readInput();
+	virtual float getSteeringAngle();
 
 private:
-	SDLKey keyFlagMap[ NUM_KEYS ];
+	SDLKey keyFlagMap[ NUM_FLAGS ];
 };
 
 #endif /* REGINPUT_H_ */

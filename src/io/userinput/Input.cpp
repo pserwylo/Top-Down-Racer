@@ -1,11 +1,9 @@
 #include "io/userinput/Input.h"
 
-Input::Input() : quit ( false )
+Input::Input() : quit ( false ), steeringAngle ( 0 )
 {
 	this->flags[ ACCEL ] = false;
 	this->flags[ DECEL ] = false;
-	this->flags[ LEFT ] = false;
-	this->flags[ RIGHT ] = false;
 	this->flags[ SHOOT ] = false;
 }
 
@@ -23,14 +21,22 @@ bool Input::isDecelarating()
 	return this->flags[ DECEL ];
 }
 
-bool Input::isTurningLeft()
+float Input::getSteeringAngle()
 {
-	return this->flags[ LEFT ];
+	return this->steeringAngle;
 }
 
-bool Input::isTurningRight()
+void Input::setSteeringAngle( float angle )
 {
-	return this->flags[ RIGHT ];
+	if ( angle > 1.0f )
+	{
+		angle = 1.0f;
+	}
+	else if ( angle < -1.0f )
+	{
+		angle = -1.0f;
+	}
+	this->steeringAngle = angle;
 }
 
 bool Input::isShooting()

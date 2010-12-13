@@ -16,19 +16,24 @@ public:
 	virtual bool isAccelarating();
 	virtual bool isDecelarating();
 	virtual bool isShooting();
-	virtual bool isTurningLeft();
-	virtual bool isTurningRight();
+	virtual float getSteeringAngle();
 	virtual bool isQuitting();
 
 protected:
 	static const int ACCEL = 0;
 	static const int DECEL = 1;
-	static const int LEFT = 2;
-	static const int RIGHT = 3;
-	static const int SHOOT = 4;
-	static const int NUM_KEYS = 5;
-	bool flags[ NUM_KEYS ];
+	static const int SHOOT = 2;
+	static const int LEFT = 3;
+	static const int RIGHT = 4;
+	static const int NUM_FLAGS = 5;
+	bool flags[ NUM_FLAGS ];
 	bool quit;
+
+protected:
+	void setSteeringAngle( float angle );
+
+private:
+	float steeringAngle;
 
 };
 

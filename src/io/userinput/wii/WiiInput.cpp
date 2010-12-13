@@ -11,23 +11,47 @@ WiiInput::~WiiInput()
 
 }
 
+float WiiInput::getSteeringAngle()
+{
+	if ( this->flags[ LEFT ] )
+	{
+		return -1.0f;
+	}
+	else if ( this->flags[ RIGHT ] )
+	{
+		return 1.0f;
+	}
+	else
+	{
+		return Input::getSteeringAngle();
+	}
+}
+
 void WiiInput::readInput()
 {
-
 	WPAD_ScanPads();
+	this->wpadData = WPAD_Data( WPAD_CHAN_0 );
 
-	u32 pressed = WPAD_ButtonsDown( 0 );
-	u32 held = WPAD_ButtonsHeld( 0 );
-
-	if ( pressed & WPAD_BUTTON_HOME )
+	if ( this->wpadData->btns_d & WPAD_BUTTON_HOME )
 	{
 		this->quit = !this->quit;
 	}
 
-	this->flags[ LEFT ] = ( held & WPAD_BUTTON_UP );
-	this->flags[ RIGHT ] = ( held & WPAD_BUTTON_DOWN );
-	this->flags[ ACCEL ] = ( held & WPAD_BUTTON_2 );
-	this->flags[ DECEL ] = ( held & WPAD_BUTTON_LEFT );
-	this->flags[ SHOOT ] = ( held & WPAD_BUTTON_1 );
+	// Only bother going up to about 50 degrees, because you don't want to turn much more than that when
+	// steering with the wiimote...
+	if ( -WiiInput::STRAIGHT_THRESHOLD < this->wpadData->orient.pitch && this->wpadData->orient.pitch < WiiInput::STRAIGHT_THRESHOLD )
+	{
+		this->setSteeringAngle( 0 );
+	}
+	else
+	{
+		this->setSteeringAngle( - this->wpadData->orient.pitch / 50.0f );
+	}
+
+	this->flags[ LEFT ] = ( this->wpadData->btns_h & WPAD_BUTTON_UP );
+	this->flags[ RIGHT ] = ( this->wpadData->btns_h & WPAD_BUTTON_DOWN );
+	this->flags[ ACCEL ] = ( this->wpadData->btns_h & WPAD_BUTTON_2 );
+	this->flags[ DECEL ] = ( this->wpadData->btns_h & WPAD_BUTTON_LEFT );
+	this->flags[ SHOOT ] = ( this->wpadData->btns_h & WPAD_BUTTON_1 );
 
 }

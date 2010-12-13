@@ -41,6 +41,7 @@ void WiiEnvironment::setup()
 	// init the vi.
 	VIDEO_Init();
 	WPAD_Init();
+	WPAD_SetDataFormat( WPAD_CHAN_0, WPAD_FMT_BTNS_ACC );
 
 	rmode = VIDEO_GetPreferredMode(NULL);
 

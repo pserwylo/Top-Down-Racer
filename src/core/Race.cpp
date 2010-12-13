@@ -71,18 +71,7 @@ bool Race::update( int timeDiff )
 		this->car->setThrottle( false );
 	}
 
-	if ( this->input->isTurningLeft() )
-	{
-		this->car->setSteeringAngle( -Car::MAX_STEERING_ANGLE );
-	}
-	else if ( this->input->isTurningRight() )
-	{
-		this->car->setSteeringAngle( Car::MAX_STEERING_ANGLE );
-	}
-	else
-	{
-		this->car->setSteeringAngle( 0.0f );
-	}
+	this->car->setSteeringAngle( Car::MAX_STEERING_ANGLE * this->input->getSteeringAngle() );
 
 	if ( this->input->isShooting() )
 	{
@@ -95,7 +84,7 @@ bool Race::update( int timeDiff )
 	this->car->update();
 
 #ifdef WII
-	this->world->Step( 1.0f / 10.0f, 5, 5);
+	this->world->Step( 1.0f / 5.0f, 5, 5);
 #else
 	this->world->Step( 1.0f / 60.0f, 10, 10 );
 #endif
