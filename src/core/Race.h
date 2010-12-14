@@ -1,10 +1,3 @@
-/*
- * Race.h
- *
- *  Created on: 19/10/2010
- *      Author: pete
- */
-
 #ifndef RACE_H_
 #define RACE_H_
 
@@ -24,6 +17,7 @@ public:
 	virtual ~Race();
 
 	void runRace();
+	Car* getCar() { return this->car; }
 
 private:
 	bool update( int timeSinceUpdate );

@@ -13,6 +13,7 @@
 
 #include "Box2D.h"
 #include "Gun.h"
+#include "GameObject.h"
 
 #ifdef WII
 #include "rendering/gx/WiiGfxCarRenderer.h"
@@ -20,7 +21,7 @@
 #include "rendering/reg/RegCarRenderer.h"
 #endif
 
-class Car
+class Car : public GameObject
 {
 
 #ifdef WII
@@ -40,6 +41,7 @@ public:
 	void update();
 	void setLocation( b2Vec2 loc );
 	std::vector<Gun*>& getGuns();
+	b2Body* getBody() { return this->carBody; }
 
 public:
 	const static float MAX_STEERING_ANGLE = 0.5f;

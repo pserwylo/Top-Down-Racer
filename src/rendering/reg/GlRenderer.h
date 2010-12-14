@@ -18,6 +18,7 @@ public:
 
 protected:
 	void renderShape( b2Shape* shape );
+	void renderAxis();
 
 };
 

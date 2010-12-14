@@ -16,7 +16,7 @@ public:
 	virtual void setup();
 	virtual void tearDown();
 
-	virtual void startDraw();
+	virtual void startDraw( Race* race );
 	virtual void endDraw();
 
 

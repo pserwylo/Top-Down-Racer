@@ -35,3 +35,28 @@ void GlRenderer::renderShape( b2Shape* shape )
 		}
 	glEnd();
 }
+
+void GlRenderer::renderAxis()
+{
+	glLineWidth( 2 );
+	glBegin( GL_LINES );
+
+		// RED == X AXIS
+		glColor3f( 1.0f, 0.0f, 0.0f );
+		glVertex3f( 0.0f, 0.0f, 0.0f );
+		glVertex3f( 10.0f, 0.0f, 0.0f );
+
+		// GREEN == Y AXIS
+		glColor3f( 0.0f, 1.0f, 0.0f );
+		glVertex3f( 0.0f, 0.0f, 0.0f );
+		glVertex3f( 0.0f, 10.0f, 0.0f );
+
+		// BLUE == Z AXIS
+		glColor3f( 0.0f, 0.0f, 1.0f );
+		glVertex3f( 0.0f, 0.0f, 0.0f );
+		glVertex3f( 0.0f, 0.0f, 10.0f );
+
+	glEnd();
+	glColor3f( 1.0, 1.0f, 1.0f );
+	glLineWidth( 1.0f );
+}

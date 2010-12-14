@@ -2,6 +2,7 @@
 #define ENVIRONMENT_H_
 
 class Input;
+class Race;
 
 class Environment
 {
@@ -12,7 +13,7 @@ public:
 	virtual void setup() {};
 	virtual void tearDown() {};
 
-	virtual void startDraw() {};
+	virtual void startDraw( Race* race ) {};
 	virtual void endDraw() {};
 
 	virtual Input* getInput() = 0;

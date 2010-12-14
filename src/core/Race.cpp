@@ -94,7 +94,7 @@ bool Race::update( int timeDiff )
 
 void Race::draw()
 {
-	Environment::getEnvironment()->startDraw();
+	Environment::getEnvironment()->startDraw( this );
 	this->carRenderer->render();
 	this->trackRenderer->render();
 	Environment::getEnvironment()->endDraw();

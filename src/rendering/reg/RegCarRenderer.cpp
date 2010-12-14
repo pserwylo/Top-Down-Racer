@@ -36,6 +36,8 @@ void RegCarRenderer::render()
 		glEnd();
 	};
 
+	this->renderAxis();
+
 }
 
 void RegCarRenderer::renderBody( b2Body* body )
