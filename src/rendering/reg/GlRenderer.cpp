@@ -7,6 +7,7 @@
 
 #include <rendering/reg/GlRenderer.h>
 #include "GL/gl.h"
+#include "Box2D.h"
 
 GlRenderer::GlRenderer()
 {
@@ -15,6 +16,22 @@ GlRenderer::GlRenderer()
 GlRenderer::~GlRenderer()
 {
 }
+
+
+void GlRenderer::renderBody( b2Body* body )
+{
+	glColor3f( 1.0f, 1.0f, 1.0f );
+	glPushMatrix();
+		glTranslated( body->GetPosition().x, body->GetPosition().y, 0 );
+		glRotated( body->GetAngle() * 180 / 3.14159, 0, 0, 1 );
+
+		for ( b2Fixture* f = body->GetFixtureList(); f; f = f->GetNext() )
+		{
+			this->renderShape( f->GetShape() );
+		}
+	glPopMatrix();
+}
+
 
 void GlRenderer::renderShape( b2Shape* shape )
 {

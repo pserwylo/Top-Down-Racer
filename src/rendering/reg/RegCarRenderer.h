@@ -14,9 +14,6 @@ public:
 
 	virtual void render();
 
-private:
-	void renderBody( b2Body* body );
-
 };
 
 #endif /* GLCARRENDERER_H_ */

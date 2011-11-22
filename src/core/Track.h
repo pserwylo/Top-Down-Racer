@@ -3,11 +3,12 @@
 
 #include <vector>
 #include "io/trackreader/TrackReader.h"
+#include "core/GameObject.h"
+#include "Box2D.h"
 
-class b2Shape;
-class b2World;
+class Waypoint;
 
-class Track
+class Track : public GameObject, public b2ContactListener
 {
 
 	friend class TrackReader;
@@ -17,14 +18,27 @@ public:
 	virtual ~Track();
 
 public:
-	std::vector<b2Shape*> & getObstacles();
+	std::vector<b2Shape*> & getHazards();
 	std::vector<b2Shape*> & getBorders();
-	std::vector<b2Shape*> & getWaypoints();
+	std::vector<Waypoint*> & getWaypoints();
+
+	// Contact listener functions...
+	void BeginContact( b2Contact* contact );
+
+	// GameObject functions...
+	virtual void update() {};
+	virtual bool collide( GameObject* object, b2Contact* contact );
+	virtual unsigned int getType() { return TYPE_TRACK; }
+	virtual b2Body* getBody() { return NULL; };
+	virtual std::string toString() { return "Track"; };
+
+public:
+	static const unsigned int TYPE_TRACK = 823985294;
 
 private:
-	std::vector<b2Shape*> obstacles;
+	std::vector<b2Shape*> hazards;
 	std::vector<b2Shape*> borders;
-	std::vector<b2Shape*> waypoints;
+	std::vector<Waypoint*> waypoints;
 
 };
 

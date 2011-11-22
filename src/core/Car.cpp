@@ -7,8 +7,10 @@
 
 #include "Car.h"
 #include "Gun.h"
+#include "Waypoint.h"
 #include "Box2D.h"
 #include <cmath>
+#include <iostream>
 
 const float Car::MAX_STEERING_ANGLE;
 
@@ -157,10 +159,20 @@ std::vector<Gun*>& Car::getGuns()
 	return this->guns;
 }
 
+bool Car::collide( GameObject* object, b2Contact* contact )
+{
+	if ( object->getType() == Waypoint::ID_WAYPOINT )
+	{
+		std::cout << "Hit " << object->toString() << std::endl;
+	}
+
+	return true;
+}
+
 void Car::update()
 {
 
-	float engineSpeed = this->isThrottleApplied ? 5.0f : 0.0f;
+	float engineSpeed = this->isThrottleApplied ? 16.0f : 0.0f;
 	b2Vec2 direction;
 	float steeringSpeed;
 

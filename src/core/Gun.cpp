@@ -1,13 +1,13 @@
 #include "core/Gun.h"
 #include "core/Car.h"
+#include "core/Track.h"
+#include "core/Bullet.h"
 #include <iostream>
 #include <algorithm>
 #include <cmath>
 
 Gun::Gun( b2World* world, Car* car, b2Vec2 offset ) : world( world ), car ( car ), hasShot( false )
 {
-
-	world->SetContactListener( this );
 
 	b2BodyDef gunDef;
 	gunDef.type = b2_dynamicBody;
@@ -32,6 +32,15 @@ Gun::Gun( b2World* world, Car* car, b2Vec2 offset ) : world( world ), car ( car 
 Gun::~Gun()
 {
 
+}
+
+bool Gun::collide( GameObject* object, b2Contact* contact )
+{
+	if ( object->getType() == Track::TYPE_TRACK )
+	{
+		// Remove...
+	}
+	return true;
 }
 
 b2Vec2 Gun::getShootPosition()
@@ -63,48 +72,10 @@ void Gun::shoot()
 		// if ( timeSinceLastShoot < TIME_BETWEEN_FIRING )
 		// {
 
-
-		b2BodyDef bulletDef;
-		bulletDef.type = b2_dynamicBody;
-		bulletDef.bullet = true;
-		bulletDef.position = this->getShootPosition();
-		bulletDef.linearVelocity = this->getShootVelocity();
-
-		b2Body* bulletBody = world->CreateBody( &bulletDef );
-
-		b2PolygonShape bulletShape;
-		bulletShape.SetAsBox( 0.1f, 0.1f );
-		bulletBody->CreateFixture( &bulletShape, 0.5f );
-
-		this->bullets.push_back( bulletBody );
+		Bullet* bullet = new Bullet( this->world, this );
+		this->bullets.push_back( bullet );
 
 		// }
-	}
-}
-
-void Gun::BeginContact( b2Contact* contact )
-{
-	b2Body* bodyA = contact->GetFixtureA()->GetBody();
-	b2Body* bodyB = contact->GetFixtureB()->GetBody();
-	if ( bodyA != this->gunBody && bodyB != this->gunBody )
-	{
-		for ( std::vector<b2Body*>::iterator it = this->bullets.begin(); it != this->bullets.end(); it ++ )
-		{
-			if ( *it == bodyA )
-			{
-				std::cout << "Hit A" << std::endl;
-				this->bulletsToDelete.push_back( bodyA );
-				this->bullets.erase( it );
-				break;
-			}
-			else if ( *it == bodyB )
-			{
-				std::cout << "Hit B" << std::endl;
-				this->bulletsToDelete.push_back( bodyB );
-				this->bullets.erase( it );
-				break;
-			}
-		}
 	}
 }
 
@@ -112,10 +83,15 @@ void Gun::update()
 {
 	if ( this->bulletsToDelete.size() > 0 )
 	{
-		std::cout << "Updating gun, removing " << this->bulletsToDelete.size() << " bullets..." << std::endl;
-		for ( std::vector<b2Body*>::iterator it = this->bulletsToDelete.begin(); it != this->bulletsToDelete.end(); it ++ )
+		for ( std::vector<Bullet*>::iterator it = this->bulletsToDelete.begin(); it != this->bulletsToDelete.end(); it ++ )
 		{
-			this->world->DestroyBody( *it );
+			std::vector<Bullet*>::iterator found = std::find( this->bullets.begin(), this->bullets.end(), *it );
+
+			if ( found != this->bullets.end() )
+			{
+				this->bullets.erase( found );
+			}
+			delete *it;
 		}
 		this->bulletsToDelete.erase( this->bulletsToDelete.begin(), this->bulletsToDelete.end() );
 	}
@@ -126,7 +102,7 @@ b2Body* Gun::getBody()
 	return this->gunBody;
 }
 
-std::vector<b2Body*>& Gun::getBullets()
+std::vector<Bullet*>& Gun::getBullets()
 {
 	return this->bullets;
 }

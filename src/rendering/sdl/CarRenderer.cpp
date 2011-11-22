@@ -1,6 +1,6 @@
 #include "CarRenderer.h"
-#include "SDL/SDL_image.h"
-#include "SDL/SDL_rotozoom.h"
+// #include "SDL/SDL_image.h"
+// #include "SDL/SDL_rotozoom.h"
 #include "rendering/cars_offsets.h"
 #include "core/Car.h"
 #include <iostream>

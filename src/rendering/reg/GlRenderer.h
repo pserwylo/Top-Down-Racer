@@ -8,7 +8,8 @@
 #ifndef GLRENDERER_H_
 #define GLRENDERER_H_
 
-#include "Box2D.h"
+class b2Shape;
+class b2Body;
 
 class GlRenderer
 {
@@ -18,6 +19,7 @@ public:
 
 protected:
 	void renderShape( b2Shape* shape );
+	void renderBody( b2Body* body );
 	void renderAxis();
 
 };

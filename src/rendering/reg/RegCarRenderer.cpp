@@ -1,4 +1,5 @@
 #include "core/Car.h"
+#include "core/Bullet.h"
 #include "rendering/reg/RegCarRenderer.h"
 #include <GL/gl.h>
 
@@ -21,11 +22,13 @@ void RegCarRenderer::render()
 	for ( std::vector<Gun*>::iterator it = this->car->getGuns().begin(); it != this->car->getGuns().end(); it ++ )
 	{
 		this->renderBody( (*it)->getBody() );
-		for ( std::vector<b2Body*>::iterator bIt = (*it)->getBullets().begin(); bIt != (*it)->getBullets().end(); bIt ++ )
+		for ( std::vector<Bullet*>::iterator bIt = (*it)->getBullets().begin(); bIt != (*it)->getBullets().end(); bIt ++ )
 		{
-			this->renderBody( (*bIt) );
+			this->renderBody( (*bIt)->getBody() );
 		}
 
+		// DEBUGGING:
+		// Simply draw a line from the tip of the gun, indicating the firing direction and speed...
 		b2Vec2 shootPos = (*it)->getShootPosition();
 		b2Vec2 endPos = shootPos + (*it)->getShootVelocity();
 
@@ -38,18 +41,4 @@ void RegCarRenderer::render()
 
 	this->renderAxis();
 
-}
-
-void RegCarRenderer::renderBody( b2Body* body )
-{
-	glColor3f( 1.0f, 1.0f, 1.0f );
-	glPushMatrix();
-		glTranslated( body->GetPosition().x, body->GetPosition().y, 0 );
-		glRotated( body->GetAngle() * 180 / 3.14159, 0, 0, 1 );
-
-		for ( b2Fixture* f = body->GetFixtureList(); f; f = f->GetNext() )
-		{
-			this->renderShape( f->GetShape() );
-		}
-	glPopMatrix();
 }
